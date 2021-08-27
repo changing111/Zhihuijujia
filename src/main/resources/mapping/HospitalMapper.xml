@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.HospitalMapper">
+	<select id="loginHospital" resultType="com.changing1.zhihuijujia.entity.Hospital" parameterType="com.changing1.zhihuijujia.entity.Hospital">
+		SELECT * FROM hospital WHERE hAdminPhone=#{hAdminPhone} AND hAdminPassword=#{hAdminPassword}
+	</select>
+
+	
+	<select id="getHospitalsListByCondition" resultType="com.changing1.zhihuijujia.entity.Hospital">
+		SELECT * FROM hospital WHERE 1=1 
+		<if test="hCity!=null">
+            	and hCity like concat ('%',#{hCity},'%')
+        </if>
+        <if test="hName!=null">
+            	and hName like concat ('%',#{hName},'%')
+        </if>
+	</select>
+	
+	<select id="getHospitalsListByInputLike" resultType="com.changing1.zhihuijujia.entity.Hospital">
+		SELECT * FROM hospital WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (hName like concat ('%',#{inputLike},'%')
+            	or hCity like concat ('%',#{inputLike},'%')
+            	or hAddress like concat ('%',#{inputLike},'%')
+            	or hPhoneNum like concat ('%',#{inputLike},'%')
+            	or hBus like concat ('%',#{inputLike},'%')
+            	or hContent like concat ('%',#{inputLike},'%')
+            	or hAdminPhone like concat ('%',#{inputLike},'%')
+            	or hAdminPassword like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>	
+	
+	<insert id="addHospital" parameterType="com.changing1.zhihuijujia.entity.Hospital">
+		INSERT INTO hospital(hId,hName,hCity,hAddress,hPhoneNum,hBus,hContent,hAdminPhone,hAdminPassword)
+	    VALUES (#{hId},#{hName},#{hCity},#{hAddress},#{hPhoneNum},#{hBus},#{hContent},#{hAdminPhone},#{hAdminPassword})
+	</insert>
+	
+	<delete id="deleteHospital">
+		DELETE FROM hospital WHERE hId=#{hId}
+	</delete>
+	
+	<update id="updateHospital" parameterType="com.changing1.zhihuijujia.entity.Hospital">
+	UPDATE hospital
+	SET hName=#{hName},hCity=#{hCity},hAddress=#{hAddress},hPhoneNum=#{hPhoneNum},hBus=#{hBus},hContent=#{hContent},hAdminPhone=#{hAdminPhone},hAdminPassword=#{hAdminPassword}
+	WHERE hId=#{hId}
+	</update>
+	
+	<select id="nameExists" resultType="com.changing1.zhihuijujia.entity.Hospital" parameterType="com.changing1.zhihuijujia.entity.Hospital">
+		SELECT * FROM hospital WHERE hName=#{hName}
+	</select>
+	
+	<select id="getHospitalByHAdminPhone" resultType="com.changing1.zhihuijujia.entity.Hospital" parameterType="com.changing1.zhihuijujia.entity.Hospital">
+		SELECT * FROM hospital WHERE hAdminPhone=#{hAdminPhone}
+	</select>
+
+	<select id="getHospitalByHId" resultType="com.changing1.zhihuijujia.entity.Hospital" parameterType="com.changing1.zhihuijujia.entity.Hospital">
+		SELECT * FROM hospital WHERE hId=#{hId}
+	</select>
+
+</mapper>

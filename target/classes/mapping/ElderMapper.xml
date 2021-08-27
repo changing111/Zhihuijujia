@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.ElderMapper">
+	<select id="loginElder" resultType="com.changing1.zhihuijujia.entity.Elder" parameterType="com.changing1.zhihuijujia.entity.Elder">
+		SELECT * FROM elder WHERE ePhoneNum=#{ePhoneNum} AND ePassword=#{ePassword}
+	</select>
+
+	
+	<select id="getEldersListByCondition" resultType="com.changing1.zhihuijujia.entity.Elder">
+		SELECT * FROM elder WHERE 1=1 
+		<if test="eName!=null">
+            	and eName like concat ('%',#{eName},'%')
+        </if>
+        <if test="ePhoneNum!=null">
+            	and ePhoneNum like concat ('%',#{ePhoneNum},'%')
+        </if>
+        <if test="ePassword!=null">
+            	and ePassword like concat ('%',#{ePassword},'%')
+        </if>
+        <if test="eGender!=null">
+            	and eGender like concat ('%',#{eGender},'%')
+        </if>
+        <if test="eCity!=null">
+            	and eCity like concat ('%',#{eCity},'%')
+        </if>
+        <if test="eResidence!=null">
+            	and eResidence like concat ('%',#{eResidence},'%')
+        </if>
+		<if test="eMarriage!=null">
+            	and eMarriage like concat ('%',#{eMarriage},'%')
+        </if>
+        <if test="eAddress!=null">
+            	and eAddress like concat ('%',#{eAddress},'%')
+        </if>
+        <if test="eBirth!=null">
+            	and eBirth like concat ('%',#{eBirth},'%')
+        </if>
+        <if test="eAge!=null">
+            	and eAge like concat ('%',#{eAge},'%')
+        </if>
+        <if test="eFamilyName!=null">
+            	and eFamilyName like concat ('%',#{eFamilyName},'%')
+        </if>
+        <if test="eFamilyRelation!=null">
+            	and eFamilyRelation like concat ('%',#{eFamilyRelation},'%')
+        </if>
+        <if test="eBloodType!=null">
+            	and eBloodType like concat ('%',#{eBloodType},'%')
+        </if>
+        <if test="eDisable!=null">
+            	and eDisable like concat ('%',#{eDisable},'%')
+        </if>
+        <if test="eBalance!=null">
+            	and eBalance like concat ('%',#{eBalance},'%')
+        </if>
+        <if test="eIncome!=null">
+            	and eIncome like concat ('%',#{eIncome},'%')
+        </if>
+        <if test="eIdCard!=null">
+            	and eIdCard like concat ('%',#{eIdCard},'%')
+        </if>
+	</select>
+	<select id="getEldersListByInputLike"  resultType="com.changing1.zhihuijujia.entity.Elder">
+		SELECT * FROM elder WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (eName like concat ('%',#{inputLike},'%')
+            	or ePhoneNum like concat ('%',#{inputLike},'%')
+            	or ePassword like concat ('%',#{inputLike},'%')
+            	or eGender like concat ('%',#{inputLike},'%')
+            	or eCity like concat ('%',#{inputLike},'%')
+            	or eResidence like concat ('%',#{inputLike},'%')
+            	or eMarriage like concat ('%',#{inputLike},'%')
+            	or eAddress like concat ('%',#{inputLike},'%')
+            	or eAge like concat ('%',#{inputLike},'%')
+            	or eFamilyName like concat ('%',#{inputLike},'%')
+            	or eFamilyPhone like concat ('%',#{inputLike},'%')
+            	or eFamilyRelation like concat ('%',#{inputLike},'%')
+            	or eBloodType like concat ('%',#{inputLike},'%')
+            	or eDisable like concat ('%',#{inputLike},'%')
+            	or eBalance like concat ('%',#{inputLike},'%')
+            	or eIncome like concat ('%',#{inputLike},'%')
+            	or eIdCard like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	
+	<insert id="addElder" parameterType="com.changing1.zhihuijujia.entity.Elder">
+		INSERT INTO elder(eId,eName,ePhoneNum,ePassword,eGender,eCity,eResidence,
+			eMarriage,eAddress,eBirth,eAge,eFamilyName,eFamilyPhone,eFamilyRelation,eBloodType,eDisable,eBalance,eIncome,eIdCard)
+		VALUES (#{eId},#{eName},#{ePhoneNum},#{ePassword},#{eGender},#{eCity},#{eResidence},
+		 	#{eMarriage},#{eAddress},#{eBirth},#{eAge},#{eFamilyName},#{eFamilyPhone},#{eFamilyRelation},
+		 	#{eBloodType},#{eDisable},#{eBalance},#{eIncome},#{eIdCard})
+	</insert>
+	
+	<delete id="deleteElder">
+		DELETE FROM elder WHERE ePhoneNum=#{ePhoneNum}
+	</delete>
+	
+	<update id="updateElder" parameterType="com.changing1.zhihuijujia.entity.Elder">
+	UPDATE elder
+	SET eName=#{eName},ePassword=#{ePassword},eGender=#{eGender},eCity=#{eCity},
+		eResidence=#{eResidence},eMarriage=#{eMarriage},eAddress=#{eAddress},eBirth=#{eBirth},eAge=#{eAge},
+		eFamilyName=#{eFamilyName},eFamilyPhone=#{eFamilyPhone},eFamilyRelation=#{eFamilyRelation},eBloodType=#{eBloodType},eDisable=#{eDisable},
+		eIncome=#{eIncome},eIdCard=#{eIdCard}
+	WHERE ePhoneNum=#{ePhoneNum}
+	</update>
+	
+	<select id="nameExists" resultType="com.changing1.zhihuijujia.entity.Elder" parameterType="com.changing1.zhihuijujia.entity.Elder">
+		SELECT * FROM elder WHERE ePhoneNum=#{ePhoneNum}
+	</select>
+	
+	<select id="getEBalanceByEPhoneNum" resultType="Integer" parameterType="com.changing1.zhihuijujia.entity.Elder">
+		SELECT eBalance FROM elder WHERE ePhoneNum=#{ePhoneNum}
+	</select>
+	
+	<update id="updateEBalance" parameterType="com.changing1.zhihuijujia.entity.Elder">
+	UPDATE elder
+	SET eBalance=#{eBalance}
+	WHERE ePhoneNum=#{ePhoneNum}
+	</update>
+	
+	<select id="getEldersList" resultType="com.changing1.zhihuijujia.entity.Elder">
+		SELECT * FROM elder
+	</select>
+	
+</mapper>

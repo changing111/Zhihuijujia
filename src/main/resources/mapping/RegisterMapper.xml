@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.RegisterMapper">
+	<select id="getRegistersListByCondition" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regDPhoneNum IN (SELECT dPhoneNum FROM doctor WHERE dOId IN (SELECT oId FROM office WHERE oHId=#{regId}))
+		<if test="regDName!=null">
+            	and regDName like concat ('%',#{regDName},'%')
+        </if>
+        <if test="regEName!=null">
+            	and regEName like concat ('%',#{regEName},'%')
+        </if>
+        <if test="regDate!=null">
+            	and regDate=#{regDate}
+        </if>
+        
+	</select>
+	
+	<select id="getRegistersListByInputLike" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regDPhoneNum IN (SELECT dPhoneNum FROM doctor WHERE dOId IN (SELECT oId FROM office WHERE oHId=#{hId}))
+		<if test="inputLike!=null">
+            	and (regDName like concat ('%',#{inputLike},'%')
+            	or regDPhoneNum like concat ('%',#{inputLike},'%')
+            	or regEName like concat ('%',#{inputLike},'%')
+            	or regEPhoneNum like concat ('%',#{inputLike},'%')
+            	or regDate like binary  concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	<select id="getRegistersListByEPhoneAndCondition" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regEPhoneNum=#{regEPhoneNum}
+		<if test="regDName!=null">
+            	and regDName like concat ('%',#{regDName},'%')
+        </if>
+        <if test="regDate!=null">
+            	and regDate=#{regDate}
+        </if>
+        
+	</select>
+	
+	<select id="getRegistersListByEPhoneAndInputLike" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regEPhoneNum=#{regEPhoneNum}
+		<if test="regEName!=null">
+            	and (regDName like concat ('%',#{regEName},'%')
+            	or regDPhoneNum like concat ('%',#{regEName},'%')
+            	or regEPhoneNum like concat ('%',#{regEName},'%')
+            	or regDate like binary  concat ('%',#{regEName},'%'))
+        </if>
+	</select>
+	
+	<select id="getRegistersListByEPhoneNum" parameterType="com.changing1.zhihuijujia.entity.Register" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regEPhoneNum=#{regEPhoneNum}
+	</select>
+	
+	<select id="ifExists" parameterType="com.changing1.zhihuijujia.entity.Register" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regEPhoneNum=#{regEPhoneNum} AND regDate=#{regDate}
+	</select>
+	
+	<select id="getRegistersListByDPhoneNum" parameterType="com.changing1.zhihuijujia.entity.Register" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regDPhoneNum=#{regDPhoneNum}
+	</select>
+	
+	<insert id="addRegister" parameterType="com.changing1.zhihuijujia.entity.Register">
+		INSERT INTO register(regId,regDName,regDPhoneNum,regDate,regEName,regEPhoneNum)
+	    VALUES (#{regId},#{regDName},#{regDPhoneNum},#{regDate},#{regEName},#{regEPhoneNum})
+	</insert>
+	
+	<delete id="deleteRegister">
+		DELETE FROM register WHERE regId=#{regId}
+	</delete>
+	
+	<select id="getRegistersListByDPhoneAndDate" parameterType="com.changing1.zhihuijujia.entity.Register" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regDPhoneNum=#{regDPhoneNum} AND regDate=#{regDate}
+	</select>
+	
+	<select id="getRegistersListByHId" resultType="com.changing1.zhihuijujia.entity.Register">
+		SELECT * FROM register WHERE regDPhoneNum IN (SELECT dPhoneNum FROM doctor WHERE dOId IN (SELECT oId FROM office WHERE oHId=#{hId}))
+	</select>
+
+</mapper>

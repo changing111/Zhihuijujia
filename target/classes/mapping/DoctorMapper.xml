@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.DoctorMapper">
+	
+	<select id="getDoctorsListByOId" parameterType="com.changing1.zhihuijujia.entity.Doctor" resultType="com.changing1.zhihuijujia.entity.Doctor">
+		SELECT * FROM doctor WHERE dOId=#{dOId}
+	</select>
+	
+	<insert id="addDoctor" parameterType="com.changing1.zhihuijujia.entity.Doctor">
+		INSERT INTO doctor(dId,dName,dGender,dPhoneNum,dContent,dOId)
+	    VALUES (#{dId},#{dName},#{dGender},#{dPhoneNum},#{dContent},#{dOId})
+	</insert>
+	
+	<delete id="deleteDoctor">
+		DELETE FROM doctor WHERE dId=#{dId}
+	</delete>
+	
+	<update id="updateDoctor" parameterType="com.changing1.zhihuijujia.entity.Doctor">
+	UPDATE doctor
+	SET dName=#{dName},dGender=#{dGender},dPhoneNum=#{dPhoneNum},dContent=#{dContent},dOId=#{dOId}
+	WHERE dId=#{dId}
+	</update>
+
+</mapper>

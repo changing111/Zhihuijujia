@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.ShopMapper">
+	<select id="loginShop" resultType="com.changing1.zhihuijujia.entity.Shop" parameterType="com.changing1.zhihuijujia.entity.Shop">
+		SELECT distinct sPhoneNum FROM shop WHERE sPhoneNum=#{sPhoneNum} AND sPassword=#{sPassword}
+	</select>
+
+	
+	<select id="getShopsListByCondition" resultType="com.changing1.zhihuijujia.entity.Shop">
+		SELECT * FROM shop WHERE 1=1 
+		<if test="sName!=null">
+            	and sName like concat ('%',#{sName},'%')
+        </if>
+        <if test="sPhoneNum!=null">
+            	and sPhoneNum like concat ('%',#{sPhoneNum},'%')
+        </if>
+        <if test="sCity!=null">
+            	and sCity like concat ('%',#{sCity},'%')
+        </if>
+	</select>
+	
+	<select id="getShopsListByInputLike" resultType="com.changing1.zhihuijujia.entity.Shop">
+		SELECT * FROM shop WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (sName like concat ('%',#{inputLike},'%')
+            	or sPhoneNum like concat ('%',#{inputLike},'%')
+            	or sPassword like concat ('%',#{inputLike},'%')
+            	or sAddress like concat ('%',#{inputLike},'%')
+            	or sBalance like concat ('%',#{inputLike},'%')
+            	or sHostCard like concat ('%',#{inputLike},'%')
+            	or sHostName like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	
+	<insert id="addShop" parameterType="com.changing1.zhihuijujia.entity.Shop">
+		INSERT INTO shop(sId,sName,sHostName,sHostCard,sPhoneNum,sPassword,sCity,sAddress,sBalance)
+		 VALUES (#{sId},#{sName},#{sHostName},#{sHostCard},#{sPhoneNum},#{sPassword},#{sCity},#{sAddress},#{sBalance})
+	</insert>
+	
+	<delete id="deleteShop">
+		DELETE FROM shop WHERE sPhoneNum=#{sPhoneNum}
+	</delete>
+	
+	<update id="updateShop" parameterType="com.changing1.zhihuijujia.entity.Shop">
+	UPDATE shop
+	SET sName=#{sName},sHostName=#{sHostName},sHostCard=#{sHostCard},sPhoneNum=#{sPhoneNum},sPassword=#{sPassword},sCity=#{sCity},sAddress=#{sAddress}
+	WHERE sPhoneNum=#{sPhoneNum}
+	</update>
+	
+	<select id="nameExists" resultType="com.changing1.zhihuijujia.entity.Shop" parameterType="com.changing1.zhihuijujia.entity.Shop">
+		SELECT * FROM shop WHERE sPhoneNum=#{sPhoneNum}
+	</select>
+	
+	<select id="getSBalanceBySPhoneNum" resultType="Integer" parameterType="com.changing1.zhihuijujia.entity.Shop">
+		SELECT sBalance FROM shop WHERE sPhoneNum=#{sPhoneNum}
+	</select>
+	
+	<update id="updateSBalance" parameterType="com.changing1.zhihuijujia.entity.Shop">
+	UPDATE shop
+	SET sBalance=#{sBalance}
+	WHERE sPhoneNum=#{sPhoneNum}
+	</update>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.OfficeMapper">
+	
+	<select id="getOfficesListByHId" parameterType="com.changing1.zhihuijujia.entity.Office" resultType="com.changing1.zhihuijujia.entity.Office">
+		SELECT * FROM office WHERE oHId=#{oHId}
+	</select>
+	
+	<insert id="addOffice" parameterType="com.changing1.zhihuijujia.entity.Office">
+		INSERT INTO office(oId,oName,oHId)
+	    VALUES (#{oId},#{oName},#{oHId})
+	</insert>
+	
+	<delete id="deleteOffice">
+		DELETE FROM office WHERE oId=#{oId}
+	</delete>
+	
+	<update id="updateOffice" parameterType="com.changing1.zhihuijujia.entity.Office">
+	UPDATE office
+	SET oName=#{oName}
+	WHERE oId=#{oId}
+	</update>
+
+</mapper>

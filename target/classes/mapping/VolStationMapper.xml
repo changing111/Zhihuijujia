@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.VolStationMapper">
+	<select id="loginVolStation" resultType="com.changing1.zhihuijujia.entity.VolStation" parameterType="com.changing1.zhihuijujia.entity.VolStation">
+		SELECT * FROM vol_station WHERE vsAdminPhone=#{vsAdminPhone} AND vsAdminPass=#{vsAdminPass}
+	</select>
+
+	
+	<select id="getVolStationsListByCondition" resultType="com.changing1.zhihuijujia.entity.VolStation">
+		SELECT * FROM vol_station WHERE 1=1 
+		<if test="vsCity!=null">
+            	and vsCity like concat ('%',#{vsCity},'%')
+        </if>
+        <if test="vsName!=null">
+            	and vsName like concat ('%',#{vsName},'%')
+        </if>
+	</select>
+
+	<select id="getVolStationsListByInputLike" resultType="com.changing1.zhihuijujia.entity.VolStation">
+		SELECT * FROM vol_station WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (vsName like concat ('%',#{inputLike},'%')
+            	or vsCity like concat ('%',#{inputLike},'%')
+            	or vsAdminName like concat ('%',#{inputLike},'%')
+            	or vsAdminPhone like concat ('%',#{inputLike},'%')
+            	or vsAdminPass like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+		
+	<insert id="addVolStation">
+		INSERT INTO vol_station(vsId,vsName,vsCity,vsAdminName,vsAdminPhone,vsAdminPass,vsAddress) 
+		VALUES (#{vsId},#{vsName},#{vsCity},#{vsAdminName},#{vsAdminPhone},#{vsAdminPass},#{vsAddress})
+	</insert>
+	
+	<delete id="deleteVolStation">
+		DELETE FROM vol_station WHERE vsId=#{vsId}
+	</delete>
+	
+	<update id="updateVolStation">
+	UPDATE vol_station
+	SET vsName=#{vsName},vsCity=#{vsCity},vsAdminName=#{vsAdminName},vsAddress=#{vsAddress},vsAdminPhone=#{vsAdminPhone},vsAdminPass=#{vsAdminPass}
+	WHERE vsId=#{vsId}
+	</update>
+	
+	<select id="nameExists" resultType="com.changing1.zhihuijujia.entity.VolStation" parameterType="com.changing1.zhihuijujia.entity.VolStation">
+		SELECT * FROM vol_station WHERE vsName=#{vsName}
+	</select>
+	
+	<select id="getVolStationByVsAdminPhone" resultType="com.changing1.zhihuijujia.entity.VolStation" parameterType="com.changing1.zhihuijujia.entity.VolStation">
+		SELECT * FROM vol_station WHERE vsAdminPhone=#{vsAdminPhone}
+	</select>
+
+</mapper>

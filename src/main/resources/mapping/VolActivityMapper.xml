@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.VolActivityMapper">
+
+	<select id="getVolActivitysListByCondition" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity  WHERE vaVsId=#{vaVsId} 
+		<if test="vaState!=null">
+            	and vaState like concat ('%',#{vaState},'%')
+        </if>
+        <if test="vaEName!=null">
+            	and vaEName like concat ('%',#{vaEName},'%')
+        </if>
+	</select>	
+	
+	<select id="getVolActivitysListByInputLike" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity WHERE vaVsId=#{vaVsId} 
+		<if test="vaEName!=null">
+            	and (vaName like concat ('%',#{vaEName},'%')
+            	or vaVsId like concat ('%',#{vaEName},'%')
+            	or vaVsName like concat ('%',#{vaEName},'%')
+            	or vaEName like concat ('%',#{vaEName},'%')
+            	or vaEPhoneNum like concat ('%',#{vaEName},'%')
+            	or vaHourNum like concat ('%',#{vaEName},'%')
+            	or vaRemSum like concat ('%',#{vaEName},'%')
+            	or vaRemNum like concat ('%',#{vaEName},'%')
+            	or vaState like concat ('%',#{vaEName},'%'))
+        </if>
+	</select>
+	
+	<select id="getVolActivitysListByEPhoneAndCondition" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity  WHERE vaEPhoneNum=#{vaEPhoneNum} 
+		<if test="vaState!=null">
+            	and vaState like concat ('%',#{vaState},'%')
+        </if>
+	</select>	
+	
+	<select id="getVolActivitysListByEPhoneAndInputLike" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity WHERE vaEPhoneNum=#{vaEPhoneNum} 
+		<if test="vaEName!=null">
+            	and (vaName like concat ('%',#{vaEName},'%')
+            	or vaVsName like concat ('%',#{vaEName},'%')
+            	or vaHourNum like concat ('%',#{vaEName},'%')
+            	or vaRemSum like concat ('%',#{vaEName},'%')
+            	or vaRemNum like concat ('%',#{vaEName},'%')
+            	or vaState like concat ('%',#{vaEName},'%'))
+        </if>
+	</select>
+	
+	<select id="getVolActivitysListByVsId" parameterType="com.changing1.zhihuijujia.entity.VolActivity" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity  WHERE vaVsId=#{vaVsId}
+	</select>
+	
+	<insert id="addVolActivity">
+		INSERT INTO vol_activity(vaId,vaName,vaVsId,vaVsName,vaEName,vaEPhoneNum,vaTime,vaHourNum,vaRemSum,vaRemNum,vaState) 
+		VALUES (#{vaId},#{vaName},#{vaVsId},#{vaVsName},#{vaEName},#{vaEPhoneNum},#{vaTime},#{vaHourNum},#{vaRemSum},#{vaRemNum},#{vaState})
+	</insert>
+	
+	<delete id="deleteVolActivity">
+		DELETE FROM vol_activity WHERE vaId=#{vaId}
+	</delete>
+	
+	<update id="updateVolActivityVaRemNum" parameterType="com.changing1.zhihuijujia.entity.VolActivity">
+	UPDATE vol_activity
+	SET vaRemNum=#{vaRemNum}
+	WHERE vaId=#{vaId}
+	</update>
+	
+	<update id="updateVolActivityVaState" parameterType="com.changing1.zhihuijujia.entity.VolActivity">
+	UPDATE vol_activity
+	SET vaState=#{vaState}
+	WHERE vaId=#{vaId}
+	</update>
+	
+	<select id="getVolActivitysListByVaEPhoneNum" parameterType="com.changing1.zhihuijujia.entity.VolActivity" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity  WHERE vaEPhoneNum=#{vaEPhoneNum}
+	</select>
+	
+	<select id="getVolActivityByVaId" parameterType="com.changing1.zhihuijujia.entity.VolActivity" resultType="com.changing1.zhihuijujia.entity.VolActivity">
+		SELECT * FROM vol_activity  WHERE vaId=#{vaId}
+	</select>
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.VolBookMapper">
+	<select id="getVolBooksListByCondition" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE 1=1 
+		<if test="vbState!=null">
+            	and vbState like concat ('%',#{vbState},'%')
+        </if>
+
+	</select>
+	
+	<select id="getVolBooksListByInputLike" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (vbVName like concat ('%',#{inputLike},'%')
+            	or vbVPhoneNum like concat ('%',#{inputLike},'%')
+            	or vbVaName like concat ('%',#{inputLike},'%')
+            	or vbVaHourNum like concat ('%',#{inputLike},'%')
+            	or vbEName like concat ('%',#{inputLike},'%')
+            	or vbEPhoneNum like concat ('%',#{inputLike},'%')
+            	or vbState like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	<select id="getVolBooksListByVaIdAndLike" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE vbVaId=#{vbVaId} 
+		<if test="vbState!=null">
+            	and (vbVName like concat ('%',#{vbState},'%')
+            	or vbVPhoneNum like concat ('%',#{vbState},'%')
+            	or vbVaName like concat ('%',#{vbState},'%')
+            	or vbVaHourNum like concat ('%',#{vbState},'%')
+            	or vbEName like concat ('%',#{vbState},'%')
+            	or vbEPhoneNum like concat ('%',#{vbState},'%')
+            	or vbState like concat ('%',#{vbState},'%'))
+        </if>
+	</select>
+	
+	<select id="getVolBooksListByVaId" parameterType="com.changing1.zhihuijujia.entity.VolBook" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE vbVaId=#{vbVaId}
+		<if test="vbState!=null">
+            	and vbState like concat ('%',#{vbState},'%')
+        </if>
+	</select>
+	<select id="ifExists" parameterType="com.changing1.zhihuijujia.entity.VolBook" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE vbVaId=#{vbVaId} AND vbVPhoneNum=#{vbVPhoneNum}
+	</select>
+	
+	<select id="getVolBooksListByVPhoneNum" parameterType="com.changing1.zhihuijujia.entity.VolBook" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE vbVPhoneNum=#{vbVPhoneNum}
+		<if test="vbState!=null">
+            	and vbState like concat ('%',#{vbState},'%')
+        </if>
+	</select>
+	<select id="getVolBooksListByVPhoneAndLike" resultType="com.changing1.zhihuijujia.entity.VolBook">
+		SELECT * FROM vol_book WHERE vbVPhoneNum=#{vbVPhoneNum}
+		<if test="vbState!=null">
+            	and (vbVName like concat ('%',#{vbState},'%')
+            	or vbVPhoneNum like concat ('%',#{vbState},'%')
+            	or vbVaName like concat ('%',#{vbState},'%')
+            	or vbVaHourNum like concat ('%',#{vbState},'%')
+            	or vbEName like concat ('%',#{vbState},'%')
+            	or vbEPhoneNum like concat ('%',#{vbState},'%')
+            	or vbState like concat ('%',#{vbState},'%'))
+        </if>
+	</select>
+	
+	<insert id="addVolBook">
+		INSERT INTO vol_book(vbId,vbVName,vbVPhoneNum,vbVaId,vbVaName,vbVaTime,vbVaHourNum,vbEName,vbEPhoneNum,vbState) 
+		VALUES (#{vbId},#{vbVName},#{vbVPhoneNum},#{vbVaId},#{vbVaName},#{vbVaTime},#{vbVaHourNum},#{vbEName},#{vbEPhoneNum},#{vbState})
+	</insert>
+	
+	<delete id="deleteVolBook">
+		DELETE FROM vol_book WHERE vbId=#{vbId}
+	</delete>
+	
+	<update id="updateVolBookState" parameterType="com.changing1.zhihuijujia.entity.VolBook">
+	UPDATE vol_book
+	SET vbState=#{vbState}
+	WHERE vbId=#{vbId}
+	</update>
+</mapper>

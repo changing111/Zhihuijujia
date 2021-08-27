@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.AdministratorMapper">
+	<select id="loginAdministrator" resultType="com.changing1.zhihuijujia.entity.Administrator" parameterType="com.changing1.zhihuijujia.entity.Administrator">
+		SELECT * FROM administrator WHERE aId=#{aId} AND aPassword=#{aPassword}
+	</select>
+
+	<select id="getAuthorityById" resultType="com.changing1.zhihuijujia.entity.Administrator">
+		SELECT * FROM administrator WHERE aId=#{aId}
+	</select>
+	
+	<select id="getAdministratorsListByInputLike" resultType="com.changing1.zhihuijujia.entity.Administrator">
+		SELECT * FROM administrator WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (aId like concat ('%',#{inputLike},'%')
+            	or aPassword like concat ('%',#{inputLike},'%')
+            	or aAuthority like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	
+	<insert id="addAdministrator" parameterType="com.changing1.zhihuijujia.entity.Administrator">
+		INSERT INTO administrator(aId,aPassword,aAuthority) VALUES (#{aId},#{aPassword},#{aAuthority})
+	</insert>
+	
+	<delete id="deleteAdministrator">
+		DELETE FROM administrator WHERE aId=#{aId}
+	</delete>
+	
+	<update id="updateAdministrator" parameterType="com.changing1.zhihuijujia.entity.Administrator">
+		UPDATE administrator 
+		SET aPassword=#{aPassword}
+		WHERE aId=#{aId}
+	</update>
+	
+	<select id="nameExists" resultType="com.changing1.zhihuijujia.entity.Administrator" parameterType="com.changing1.zhihuijujia.entity.Administrator">
+		SELECT * FROM administrator WHERE aId=#{aId}
+	</select>
+
+</mapper>

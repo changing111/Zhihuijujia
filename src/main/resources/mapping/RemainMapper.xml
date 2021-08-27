@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.RemainMapper">
+	
+	<select id="getRemainsListByDPhoneNum" parameterType="com.changing1.zhihuijujia.entity.Remain" resultType="com.changing1.zhihuijujia.entity.Remain">
+		SELECT * FROM remain WHERE remDPhoneNum=#{remDPhoneNum}
+	</select>
+	
+	<insert id="addRemain">
+		INSERT INTO remain(remId,remDPhoneNum,remDName,remDate,remSum,remNum)
+	    VALUES (#{remId},#{remDPhoneNum},#{remDName},#{remDate},#{remSum},#{remNum})
+	</insert>
+	
+	<delete id="deleteRemain">
+		DELETE FROM remain WHERE remId=#{remId}
+	</delete>
+
+	<select id="nameExists" parameterType="com.changing1.zhihuijujia.entity.Remain" resultType="com.changing1.zhihuijujia.entity.Remain">
+		SELECT * FROM remain WHERE remDPhoneNum=#{remDPhoneNum} AND remDate=#{remDate}
+	</select>
+		
+	<update id="updateRemain" parameterType="com.changing1.zhihuijujia.entity.Remain">
+	UPDATE remain
+	SET remNum=#{remNum}
+	WHERE remId=#{remId}
+	</update>
+</mapper>

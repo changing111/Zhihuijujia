@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.ShopGoodsMapper">
+	
+	<select id="getShopGoodsListBySId" resultType="com.changing1.zhihuijujia.entity.ShopGoods"  parameterType="com.changing1.zhihuijujia.entity.ShopGoods">
+		SELECT * FROM shop_goods WHERE sId=#{sId}
+	</select>
+	
+	<insert id="addShopGoods" parameterType="com.changing1.zhihuijujia.entity.ShopGoods">
+		INSERT INTO shop_goods(sId,sgId,sgContent,sgPrice) VALUES (#{sId},#{sgId},#{sgContent},#{sgPrice})
+	</insert>
+	
+	<delete id="deleteShopGoods">
+		DELETE FROM shop_goods WHERE sgId=#{sgId}
+	</delete>
+	
+	<update id="updateShopGoods" parameterType="com.changing1.zhihuijujia.entity.ShopGoods">
+	UPDATE shop_goods
+	SET sgContent=#{sgContent},sgPrice=#{sgPrice}
+	WHERE sgId=#{sgId}
+	</update>
+	
+	<delete id="deleteAllShopGoodsBySId">
+		DELETE FROM shop_goods WHERE sId=#{sId}
+	</delete>
+</mapper>

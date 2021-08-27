@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.WorkOrderMapper">
+	
+	<select id="getWorkOrdersListByCondition" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE 1=1 
+		<if test="wEName!=null">
+            	and wEName like concat ('%',#{wEName},'%')
+        </if>
+        <if test="wSgContent!=null">
+            	and wSgContent like concat ('%',#{wSgContent},'%')
+        </if>
+        <if test="wSName!=null">
+            	and wSName like concat ('%',#{wSName},'%')
+        </if>
+        <if test="wSCity!=null">
+            	and wSCity like concat ('%',#{wSCity},'%')
+        </if>
+        <if test="wState!=null">
+            	and wState like concat ('%',#{wState},'%')
+        </if>
+	</select>
+	
+	<select id="getWorkOrdersListByInputLike" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE 1=1
+		<if test="inputLike!=null">
+            	and (wId like concat ('%',#{inputLike},'%')
+            	or wEName like concat ('%',#{inputLike},'%')
+            	or wEPhoneNum like concat ('%',#{inputLike},'%')
+            	or wEAddress like concat ('%',#{inputLike},'%')
+            	or wSgContent like concat ('%',#{inputLike},'%')
+            	or wSgPrice like concat ('%',#{inputLike},'%')
+            	or wSName like concat ('%',#{inputLike},'%')
+            	or wSPhoneNum like concat ('%',#{inputLike},'%')
+            	or wSCity like concat ('%',#{inputLike},'%')
+            	or wAmount like concat ('%',#{inputLike},'%')
+            	or wSpend like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	
+	<select id="getWorkOrdersListBySPhoneAndCondition" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE wSPhoneNum=#{wSPhoneNum} 
+		<if test="wEName!=null">
+            	and wEName like concat ('%',#{wEName},'%')
+        </if>
+        <if test="wSName!=null">
+            	and wSName like concat ('%',#{wSName},'%')
+        </if>
+        <if test="wSgContent!=null">
+            	and wSgContent like concat ('%',#{wSgContent},'%')
+        </if>
+        <if test="wState!=null">
+            	and wState like concat ('%',#{wState},'%')
+        </if>
+	</select>
+	
+	<select id="getWorkOrdersListBySPhoneAndInputLike" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE wSPhoneNum=#{wSPhoneNum}
+		<if test="wEName!=null">
+            	and wState like concat ('%',#{wEName},'%')
+            	or wEName like concat ('%',#{wEName},'%')
+            	or wEAddress like concat ('%',#{wEName},'%')
+            	or wSgContent like concat ('%',#{wEName},'%')
+            	or wSgPrice like concat ('%',#{wEName},'%')
+            	or wAmount like concat ('%',#{wEName},'%')
+            	or wSpend like concat ('%',#{wEName},'%')
+        </if>
+	</select>
+	<select id="getWorkOrdersListByEPhoneAndCondition" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE wEPhoneNum=#{wEPhoneNum} 
+		<if test="wEName!=null">
+            	and wEName like concat ('%',#{wEName},'%')
+        </if>
+        <if test="wSName!=null">
+            	and wSName like concat ('%',#{wSName},'%')
+        </if>
+        <if test="wSgContent!=null">
+            	and wSgContent like concat ('%',#{wSgContent},'%')
+        </if>
+        <if test="wState!=null">
+            	and wState like concat ('%',#{wState},'%')
+        </if>
+	</select>
+	
+	<select id="getWorkOrdersListByEPhoneAndInputLike" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE wEPhoneNum=#{wEPhoneNum}
+		<if test="wEName!=null">
+            	and wState like concat ('%',#{wEName},'%')
+            	or wEName like concat ('%',#{wEName},'%')
+            	or wEAddress like concat ('%',#{wEName},'%')
+            	or wSgContent like concat ('%',#{wEName},'%')
+            	or wSgPrice like concat ('%',#{wEName},'%')
+            	or wAmount like concat ('%',#{wEName},'%')
+            	or wSpend like concat ('%',#{wEName},'%')
+        </if>
+	</select>
+	
+	<insert id="addWorkOrder" parameterType="com.changing1.zhihuijujia.entity.WorkOrder">
+		INSERT INTO workOrder(wId,wEName,wEPhoneNum,wEAddress,wSgContent,wSgPrice,wSName,wSPhoneNum,wSCity,wServiceTime,wAmount,wSpend,wState)
+		VALUES (#{wId},#{wEName},#{wEPhoneNum},#{wEAddress},#{wSgContent},#{wSgPrice},#{wSName},#{wSPhoneNum},#{wSCity},#{wServiceTime},#{wAmount},#{wSpend},#{wState})
+	</insert>
+	
+	<update id="updateWorkOrderState" parameterType="com.changing1.zhihuijujia.entity.WorkOrder">
+	UPDATE workOrder
+	SET wState=#{wState}
+	WHERE wId=#{wId}
+	</update>
+	
+	<select id="getWorkOrderByEPhoneNum" parameterType="com.changing1.zhihuijujia.entity.WorkOrder" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE wEPhoneNum=#{wEPhoneNum}
+	</select>
+	
+	<select id="getWorkOrderBySPhoneNum" parameterType="com.changing1.zhihuijujia.entity.WorkOrder" resultType="com.changing1.zhihuijujia.entity.WorkOrder">
+		SELECT * FROM workOrder WHERE wSPhoneNum=#{wSPhoneNum}
+	</select>
+	
+
+</mapper>

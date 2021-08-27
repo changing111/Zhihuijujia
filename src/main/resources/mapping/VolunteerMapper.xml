@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing1.zhihuijujia.mapper.VolunteerMapper">
+	<select id="loginVolunteer" resultType="com.changing1.zhihuijujia.entity.Volunteer" parameterType="com.changing1.zhihuijujia.entity.Volunteer">
+		SELECT * FROM volunteer WHERE vPhone=#{vPhone} AND vPassword=#{vPassword}
+	</select>
+	
+	<select id="getVolunteersListByCondition" parameterType="com.changing1.zhihuijujia.entity.Volunteer" resultType="com.changing1.zhihuijujia.entity.Volunteer">
+		SELECT * FROM volunteer WHERE 1=1 
+		<if test="vGender!=null">
+            	and vGender like concat ('%',#{vGender},'%')
+        </if>
+        <if test="vName!=null">
+            	and vName like concat ('%',#{vName},'%')
+        </if>
+        <if test="vVsName!=null">
+            	and vVsName like concat ('%',#{vVsName},'%')
+        </if>
+	</select>	
+	
+	<select id="getVolunteersListByInputLike"  resultType="com.changing1.zhihuijujia.entity.Volunteer">
+		SELECT * FROM volunteer WHERE 1=1 
+		<if test="inputLike!=null">
+            	and (vName like concat ('%',#{inputLike},'%')
+            	or vGender like concat ('%',#{inputLike},'%')
+            	or vPhone like concat ('%',#{inputLike},'%')
+            	or vPassword like concat ('%',#{inputLike},'%')
+            	or vJob like concat ('%',#{inputLike},'%')
+            	or vHour like concat ('%',#{inputLike},'%')
+            	or vVsName like concat ('%',#{inputLike},'%'))
+        </if>
+	</select>
+	<select id="getVolunteersListByVsIdAndLike" parameterType="com.changing1.zhihuijujia.entity.Volunteer" resultType="com.changing1.zhihuijujia.entity.Volunteer">
+		SELECT * FROM volunteer WHERE vVsId=#{vVsId} 
+		<if test="vJob!=null">
+            	and (vName like concat ('%',#{vJob},'%')
+            	or vGender like concat ('%',#{vJob},'%')
+            	or vPhone like concat ('%',#{vJob},'%')
+            	or vPassword like concat ('%',#{vJob},'%')
+            	or vJob like concat ('%',#{vJob},'%')
+            	or vHour like concat ('%',#{vJob},'%')
+            	or vVsName like concat ('%',#{vJob},'%'))
+        </if>
+	</select>
+	
+	<select id="getVolunteersListByVsId" parameterType="com.changing1.zhihuijujia.entity.Volunteer" resultType="com.changing1.zhihuijujia.entity.Volunteer">
+		SELECT * FROM volunteer WHERE vVsId=#{vVsId}
+		<if test="vGender!=null">
+            	and vGender like concat ('%',#{vGender},'%')
+        </if>
+        <if test="vName!=null">
+            	and vName like concat ('%',#{vName},'%')
+        </if>
+        <if test="vVsName!=null">
+            	and vVsName like concat ('%',#{vVsName},'%')
+        </if>
+	</select>
+	
+	<insert id="addVolunteer" parameterType="com.changing1.zhihuijujia.entity.Volunteer">
+		INSERT INTO volunteer(vId,vName,vGender,vPhone,vPassword,vJob,vHour,vVsId,vVsName) 
+		VALUES (#{vId},#{vName},#{vGender},#{vPhone},#{vPassword},#{vJob},#{vHour},#{vVsId},#{vVsName})
+	</insert>
+	
+	<delete id="deleteVolunteer">
+		DELETE FROM volunteer WHERE vPhone=#{vPhone}
+	</delete>
+	
+	<update id="updateVolunteer" parameterType="com.changing1.zhihuijujia.entity.Volunteer">
+	UPDATE volunteer
+	SET vName=#{vName},vGender=#{vGender},vPhone=#{vPhone},vPassword=#{vPassword},vJob=#{vJob},vHour=#{vHour}
+	WHERE vId=#{vId}
+	</update>
+	
+	<select id="nameExists" resultType="com.changing1.zhihuijujia.entity.Volunteer" parameterType="com.changing1.zhihuijujia.entity.Volunteer">
+		SELECT * FROM volunteer WHERE vPhone=#{vPhone}
+	</select>
+
+	<update id="updateVolunteerVHour" parameterType="com.changing1.zhihuijujia.entity.Volunteer">
+	UPDATE volunteer
+	SET vHour=#{vHour}
+	WHERE vPhone=#{vPhone}
+	</update>
+</mapper>
